@@ -1,0 +1,43 @@
+module.exports=(Sequelize,DataType)=>{
+    const Itens_vendas=Sequelize.define('Itens_vendas',{
+        id:{
+            allowNull:false,
+            primaryKey:true,
+            autoIncrement:true,
+            type:DataType.INTEGER
+          },
+          venda_id:{
+            allowNull:false,
+            type:DataType.INTEGER
+          },
+          produto_id:{
+            allowNull:false,
+            type:DataType.INTEGER
+          },
+          quantidade:{
+            allowNull:false,
+            type:DataType.INTEGER
+          },
+          createdAt:{
+            allowNull:false,
+            type:DataType.DATE
+          },
+          updatedAt:{
+            allowNull:false,
+            type:DataType.DATE
+          }
+    })
+    Itens_vendas.associate=(models)=>{
+        Itens_vendas.belongTo=(models.Vendas,{
+            foreignKey='vendas_id',
+            targetKey:'id',
+            as:'v'
+        })
+        Itens_vendas.belongTo(models.Produtos,{
+            foreignKey='produtos_id',
+            targetKey:'id',
+            as:'p'
+        })
+    }
+    return Itens_vendas;
+}
